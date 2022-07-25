@@ -8,7 +8,7 @@ def file_to_list(file):
     file_object.close()
     return list(filter(None, pd.unique(rtn).tolist())) # Remove Empty/Duplicates Values
 
-def password_generator(nouns, amount_words, spaces, case):
+def name_generator(nouns, amount_words, spaces, case):
 	password = []
 	CHARS = ('*', '+', '-', '/', '_', '!', ',', ';', '.', '>', '<', '~', '&')
 	CASES = ("uc", "lc", "c")
@@ -42,30 +42,30 @@ def password_generator(nouns, amount_words, spaces, case):
 
 def run():
 	nouns: object = file_to_list('nouns.txt') 
-	menu_case = """
-		Do you want your password to be:
-		-uc (uppercase)
-		-lc (lowercase)
-		-c (capitalized)
-		-r (random)
-		(Just type uc; lc; c or r according to your choice)
-		"""
-	print("Welcome to The Rememberable Password Generator Project") 
+	names_male_mx: object = file_to_list('namesMaleMX.txt')
+	names_female_mx: object = file_to_list('namesFemaleMX.txt')
+	names_us: object = file_to_list('namesUS.txt')
+	surnames_mx: object = file_to_list('surnamesMX.txt')
+	surnames_us: object = file_to_list('surnamesMX.txt')
+	print("Welcome to Bot Name Generator Project") 
 	advanced_config = str(input("Do you want to do some advanced configuration? Just type y/n (yes or no) "))
 	if advanced_config == "y":
-		amount_words = int(input("How many words do you want your password to have? (recommended: 3) "))
-		spaces = str(input("Do you want to separate the words with a random char (eg: _ ; -)? Just type y/n (yes or no) Words will be separated with spaces by default "))
-		case = str(input(menu_case))
+		language = str(input("From which country do you want your name to be? (type mx for Mexico or us for United States)"))
+		ammount = int(input("How many bot names do you want to generate? (just type an int number (eg: 5))"))
+
 
 	elif advanced_config == "n":
-		amount_words = 3
-		spaces = " "
-		case = "r"
-
-	password = password_generator(nouns, amount_words, spaces, case)
-	print("Your password is:")
-	print(password)
-	print("Remember that this password is case-senstive (if you copy and paste it, you're going to have to remember if it was uppercase, capitalized, etc the next time you log in)")
+		language = "r" #random
+		ammount = 1
+	
+	if ammount == 1:
+		print("Your bot name is:")
+		bot_name = name_generator(language)
+	else:
+		print("Your bots names are:")
+		for i in range(ammount):
+			name = name_generator(language)
+			print(name)
 
 if __name__ == "__main__":
 	run()
