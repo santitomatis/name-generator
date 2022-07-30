@@ -12,8 +12,6 @@ def file_to_list(file):
     """
 	rtn: object = []
 	file_object: object = open(file, "r")
-	# file_object: object = open(file, "r", encoding='utf-8')
-	# file_object: object = open(file, encoding='utf-8')
 	rtn: object = file_object.read().splitlines()
 	file_object.close()
 	return list(filter(None, pd.unique(rtn).tolist())) # Remove Empty/Duplicates Values
@@ -29,8 +27,8 @@ def name_generator(language, legitimacy):
 		str: a name
 	"""
 	bot_name = []
-	first_name = []
-	surname = []
+	# first_name = []
+	# surname = []
 	CASES = ("uc", "lc", "c") 
 	START = ("Xx", "xX", "the", "The")
 	FINISH = ("xX", "Xx", "pro", "Pro", "gamer", "Gamer", "123", "1234", )
@@ -68,7 +66,7 @@ def name_generator(language, legitimacy):
 			surname = random.choice(nouns_mx)
 
 	
-	elif language == "en":
+	elif language == "us":
 		names_us: object = file_to_list('namesUS.txt')
 		surnames_us: object = file_to_list('surnamesMX.txt')
 		nouns: object = file_to_list('nouns.txt') 
@@ -84,28 +82,46 @@ def name_generator(language, legitimacy):
 			surname = random.choice(nouns)
 
 	# Cases the name and surname
-	for i in range(len(first_name)):
-		first_name[i] = first_name[i].strip()
-		if case == "uc":
-			first_name[i] = first_name[i].upper()
+	# for i in range(len(first_name)):
+	# 	first_name[i] = first_name[i].strip()
+	# 	if case == "uc":
+	# 		first_name[i] = first_name[i].upper()
 		
-		elif case == "lc":
-			first_name[i] = first_name[i].lower()
+	# 	elif case == "lc":
+	# 		first_name[i] = first_name[i].lower()
 
-		elif case == "c":
-			first_name[i] = first_name[i].capitalize()
+	# 	elif case == "c":
+	# 		first_name[i] = first_name[i].capitalize()
+	first_name = first_name.strip()
+	if case == "uc":
+		first_name = first_name.upper()
+		
+	elif case == "lc":
+		first_name = first_name.lower()
 
-	i = 0	
-	for i in range(len(surname)):
-		surname[i] = surname[i].strip()
-		if case == "uc":
-			surname[i] = surname[i].upper()
+	elif case == "c":
+		first_name = first_name.capitalize()
+
+	# i = 0	
+	# for i in range(len(surname)):
+	# 	surname[i] = surname[i].strip()
+	# 	if case == "uc":
+	# 		surname[i] = surname[i].upper()
 			
-		elif case == "lc":
-			surname[i] =surname[i].lower()
+	# 	elif case == "lc":
+	# 		surname[i] =surname[i].lower()
 
-		elif case == "c":
-			surname[i] = surname[i].capitalize()
+	# 	elif case == "c":
+	# 		surname[i] = surname[i].capitalize()	
+	surname = surname.strip()
+	if case == "uc":
+		surname = surname.upper()
+			
+	elif case == "lc":
+		surname =surname.lower()
+
+	elif case == "c":
+		surname = surname.capitalize()
 
 	r3 = random.randint(1, 2) # Determines which is going first (name or surname)
 	r4 = random.randint(1, 4) # Determines if a suffix is added
