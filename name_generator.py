@@ -62,8 +62,6 @@ def name_generator(language, legitimacy):
 		empty_counter += 1
 		start_index = -1
 	
-	print(f"log1: start is {start}")
-
 	# Name and surname
 	if language == "r":
 		language = random.choice(LAN)
@@ -127,7 +125,6 @@ def name_generator(language, legitimacy):
 	first_name = first_name.split(" ", 1) [0]
 	surname = surname.split(" ", 1) [0]
 
-	print(f"log2: name is {first_name} surname is {surname}")
 	# Finish (sometimes adds a suffix)
 	r4 = random.randint(1, 9) # Determines if a suffix is added
 	if empty_counter > 1:
@@ -161,7 +158,6 @@ def name_generator(language, legitimacy):
 			finish.append(random.choice(NUMS))
 		
 		finish = "".join(map(str, finish))
-	print(f"log3: finish is {finish}")
 	
 	# casing
 	if r4 >= 3 or r4 <= 5:
@@ -211,7 +207,8 @@ def run():
 		language = str(input("From which country do you want your name to be? (type mx for Mexico or us for United States)"))
 		ammount = int(input("How many bot names do you want to generate? (just type an int number (eg: 5))"))
 		legitimacy = str(input("Do you want your name to be more credible or more likely to be available (for registration in 3rd party apps)? | (type cr for credible and av for available)"))
-
+		separator = str(input("Do you want to generate names with a separator between them? (type y for yes and n for no)"))
+	
 	elif advanced_config == "n":
 		language = "r" #random, using "r" as a template to declare random variables from now on
 		ammount = 1
@@ -226,7 +223,8 @@ def run():
 		for i in range(ammount):
 			name = name_generator(language, legitimacy)
 			print(name)
-			print("---------------------------------------------------")
+			if separator == "y" and i >= 0 and i < ammount - 1:
+				print("---------------------------------------------------")
 
 if __name__ == "__main__":
 	run()
