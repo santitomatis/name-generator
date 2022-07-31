@@ -56,7 +56,6 @@ def name_generator(language, legitimacy):
 
 		start = START[start_index]
 	
-	bot_name.append(start)
 
 	# Concatenates the name itself
 	if language == "r":
@@ -105,19 +104,6 @@ def name_generator(language, legitimacy):
 			surname = random.choice(nouns_us)
 
 	
-	if case == "uc":
-		first_name = first_name.upper()
-		surname = surname.upper()
-		
-	elif case == "lc":
-		first_name = first_name.lower()
-		surname =surname.lower()
-
-	elif case == "c":
-		first_name = first_name.capitalize()
-		surname = surname.capitalize()
-	
-	r3 = random.randint(1, 2) # Determines which is going first (name or surname)
 	r4 = random.randint(1, 9) # Determines if a suffix is added
 	if legitimacy == "av": # If te user chooses the "availability" option it always add numbers in the end (in a wider length that if the user chooses "credibility" and the number option is choosen randomly)
 		r4 = 3
@@ -129,17 +115,10 @@ def name_generator(language, legitimacy):
 	first_name = first_name.split(" ", 1) [0]
 	surname = surname.split(" ", 1) [0]
 
-	if r3 == 1:
-		bot_name.append(surname)
-		bot_name.append(first_name)
-	elif r3 == 2:
-		bot_name.append(surname)
-		bot_name.append(first_name)
-
 	# Finish (sometimes adds a suffix)
+	finish = ""
 	if r == 1: # Adds the other pair of the start choice
 		finish = FINISH[finish_index]
-		bot_name.append(finish)
 	
 	if r4 == 1 or r4 == 2: # Adds a common suffix (also biases the random generator to make this option more frequent)
 		if legitimacy == "cr":
@@ -149,7 +128,6 @@ def name_generator(language, legitimacy):
 			finish_index = random.randint(5, 20)
 
 		finish = FINISH[finish_index]
-		bot_name.append(finish)
 	
 	if r4 == 3 or r4 == 4 or r4 == 5: # Adds a random combination of numbers to the name
 		finish = []
@@ -161,9 +139,46 @@ def name_generator(language, legitimacy):
 
 		for i in range(length):
 			finish.append(random.choice(NUMS))
+		
 		finish = "".join(map(str, finish))
-		bot_name.append(finish)
+	
+	# casing
+	if r4 >= 3 or r4 <= 5:
+		finish_index = 1 # makes it that if finish is a combination of numbers it won't get cased
+	if case == "uc":
+		if start_index > 3:
+			start = start.upper()
+		first_name = first_name.upper()
+		surname = surname.upper()
+		if finish_index > 7:
+			finish = finish.upper()
+		
+	elif case == "lc":
+		if start_index > 3:
+			start = start.lower()
+		first_name = first_name.lower()
+		surname =surname.lower()
+		if finish_index > 7:
+			finish = finish.lower()
 
+	elif case == "c":
+		if start_index > 3:
+			start = start.capitalize()
+		first_name = first_name.capitalize()
+		surname = surname.capitalize()
+		if finish_index > 7:
+			finish = finish.capitalize()
+
+	# Adding every part of the name
+	r3 = random.randint(1, 2) # Determines which is going first (name or surname)
+	bot_name.append(start)
+	if r3 == 1:
+		bot_name.append(surname)
+		bot_name.append(first_name)
+	elif r3 == 2:
+		bot_name.append(surname)
+		bot_name.append(first_name)
+	bot_name.append(finish)
 	bot_name = "".join(map(str, bot_name))
 	return bot_name
 			
