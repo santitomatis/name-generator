@@ -16,13 +16,12 @@ def file_to_list(file):
 	file_object.close()
 	return list(filter(None, pd.unique(rtn).tolist())) # Remove Empty/Duplicates Values
 
-def name_generator(language, legitimacy, length):
+def name_generator(language, legitimacy):
 	"""Creates a random name
 
 	Args:
 		language (str): Determines wether the name generated is taken from the list of most common names of Mexico or USA
 		legitimacy (str): Allows you to generate names more credible or names more likely to be available for registration(e.g: the availabilty option adds numbers at the end)
-		length (str): Makes the name generated shorter or longer
 
 	Returns:
 		str: a name
@@ -41,7 +40,7 @@ def name_generator(language, legitimacy, length):
 	# Start (sometimes adds a prefix)
 	r = random.randint(1, 6)
 	if legitimacy == "av": 
-		r = random.randint(2, 4)
+		r = 2
 
 	if r == 1:
 		start_index = random.randint(0, 1)
@@ -49,10 +48,10 @@ def name_generator(language, legitimacy, length):
 		finish_index = START.index(start)
 	
 	elif r == 2 or 6:
-		if length == "sh":
+		if legitimacy == "cr":
 			start_index = random.randint(2, 3)
 		
-		elif length == "lo":
+		elif legitimacy == "av":
 			start_index = random.randint(4, 16)
 
 		start = START[start_index]
@@ -85,6 +84,9 @@ def name_generator(language, legitimacy, length):
 		
 		elif r2b == 4:
 			surname = random.choice(nouns_mx)
+		
+		# first_name = first_name.split(" ", 1)
+		# surname = surname.split(" ", 1)
 
 	
 	elif language == "us":
@@ -102,8 +104,7 @@ def name_generator(language, legitimacy, length):
 		if r6 == 4:
 			surname = random.choice(nouns_us)
 
-	first_name = first_name.replace(" ", "")
-	surname = surname.replace(" ", "")
+	
 	if case == "uc":
 		first_name = first_name.upper()
 		surname = surname.upper()
@@ -123,6 +124,11 @@ def name_generator(language, legitimacy, length):
 	if r == 1:
 		r4 = 6 # So it just enters the if that adds the other pair
 	
+	first_name = str(first_name)
+	surname = str(surname)
+	first_name = first_name.split(" ", 1) [0]
+	surname = surname.split(" ", 1) [0]
+
 	if r3 == 1:
 		bot_name.append(surname)
 		bot_name.append(first_name)
@@ -135,11 +141,11 @@ def name_generator(language, legitimacy, length):
 		finish = FINISH[finish_index]
 		bot_name.append(finish)
 	
-	if r4 == 1 or 2: # Adds a common suffix (also biases the random generator to make this option more frequent)
-		if length == "sh":
+	if r4 == 1 or r4 == 2: # Adds a common suffix (also biases the random generator to make this option more frequent)
+		if legitimacy == "cr":
 			finish_index = random.randint(2, 5)
 		
-		elif length == "lo":
+		elif legitimacy == "av":
 			finish_index = random.randint(5, 20)
 
 		finish = FINISH[finish_index]
@@ -147,10 +153,10 @@ def name_generator(language, legitimacy, length):
 	
 	if r4 == 3: # Adds a random combination of numbers to the name
 		finish = []
-		if legitimacy == "av" or length == "lo": # If the user chooses the "availability" or "long" option it will make the number of the suffix >= 4 digits long
+		if legitimacy == "av": # If the user chooses the "availability" option it will make the number of the suffix >= 4 digits long
 			length = random.randint(4, 7)
 		
-		elif legitimacy == "cr" or length == "sh": # If the user chooses the "credibility" or "short" option it will make the number of the suffix <= 4
+		elif legitimacy == "cr": # If the user chooses the "credibility" option it will make the number of the suffix <= 4
 			length = random.randint(1, 4)
 
 		for i in range(length):
@@ -169,22 +175,20 @@ def run():
 		language = str(input("From which country do you want your name to be? (type mx for Mexico or us for United States)"))
 		ammount = int(input("How many bot names do you want to generate? (just type an int number (eg: 5))"))
 		legitimacy = str(input("Do you want your name to be more credible or more likely to be available (for registration in 3rd party apps)? | (type cr for credible and av for available)"))
-		length = str(input("Do you want your password to be short or long? (type sh for short and lo for longer names)"))
 
 	elif advanced_config == "n":
 		language = "r" #random, using "r" as a template to declare random variables from now on
 		ammount = 1
 		legitimacy = "cr"
-		length = "sh"
 	
 	if ammount == 1:
 		print("Your bot name is:")
-		name = name_generator(language, legitimacy, length)
+		name = name_generator(language, legitimacy)
 		print(name)
 	else:
 		print("Your bots names are:")
 		for i in range(ammount):
-			name = name_generator(language, legitimacy, length)
+			name = name_generator(language, legitimacy)
 			print(name)
 
 if __name__ == "__main__":
