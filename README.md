@@ -2,10 +2,10 @@
 This is a project similar to my [previous](https://github.com/santitomatis/rememberable-password-generator) (just a password generator) but instead of a password now generates a name that could hypothetically be used to create a bot's name maybe for a videogame or similar.
 
 ## Disclaimer
-**Please be aware that as [mentioned later on](https://github.com/santitomatis/rememberable-password-generator#what-i-learned), this is just a project made to help me learn some python, even doe it does work, it could have some mistakes and also it may be noticeable *specially if you generate a lot of names* that a many of the names have the same start-finish pattern**
+**Please be aware that as [mentioned later on](https://github.com/santitomatis/name-generator#what-i-learned), this is just a project made to help me learn some python, even doe it does work, it could have some mistakes and also it may be noticeable *specially if you generate a lot of names* that a many of the names have the same start-finish pattern**
 
 ## Demo
-When you run this script you are going to be asked wether you like to configure advanced stuff or just go by default
+When you run this script you are going to be asked wether you like to configure advanced settings or just go by default
 
 ```
 Welcome to Bot Name Generator Project
@@ -20,7 +20,7 @@ Your bot name is:
 xXMacazagaHelenaXx
 ```
 
-In the other hand if you type y, the amount of names generated andlanguage among other details are going to be custom
+In the other hand if you type y, the amount of names generated and language among other details are going to be custom
 
 ```
 Do you want to do some advanced configuration? Just type y/n (yes or no) y
@@ -44,21 +44,31 @@ TheMyrckLetecia51
 
 ### Explaining costumization settings
 - From which country do you want your name to be? ***Makes the names generated to pick names, surnames and nouns from a certain language***
-- Do you want your name to be more credible or more likely to be available (for registration in 3rd party apps)? ***The names generated can be mor "realistic" or if you want to more likely to be available for registration, the second option adds a number at the end of the name and makes it overall longer***
+- Do you want your name to be more credible or more likely to be available (for registration in 3rd party apps)? ***The names generated can be more "realistic" or if you want to, more likely to be available for registration, the second option adds a number at the end of the name and makes it overall longer***
 - How many bot names do you want to generate? ***pretty straightforward, allows you to generate more than 1 bot name with the same config at once***
-- Do you want to generate names with a separator between them? ***Adds a ----- between every name, makes it more readable***
+- Do you want to generate names with a separator between them? ***Adds a ----- between every name, making it more readable***
 
 *That's pretty much all there is to its functionality*
 
 ## What I learned
 I've learned a lot with this project, *mostly basic things but those things had to be learn a way or another*
 
-- How to transform a .txt file to an array with pandas
-- How to install pandas in WSL2
+- Correct some mistakes using pandas to convert .txt files to arrays
+- Use of docstrings to document functions
+- Functions of the random module
+- Use random functions to bias probabilities (in a very basic way, I'm sure that there are better practices for this)
+- Using .split() to manipulate strings
+- print statement to debug
 
-There are also some thing I already knew but this project gave me a deeper understanding
-- Arrays and tuplas
-- string manipulation methods (upper() lower(), capitalize())
+There are also some things I already knew but this project gave me a deeper understanding
+- pandas (conversion of .txt file into array)
+- git and github 
+- markdown language (to write this readme)
 
-As [mentioned before](https://github.com/santitomatis/rememberable-password-generator#disclaimer), this is just a better version of the [regular password generator](https://github.com/santitomatis/password-generator) shown at a [Platzi course](https://platzi.com/cursos/python/)
+To build this I used two Platzi's courses: [Basic python](https://platzi.com/cursos/python/) and [Introduction to computational thinking with python](https://platzi.com/cursos/python-cs/) and of course my own research
+
+![certificadoCursoBasicoPython](https://user-images.githubusercontent.com/86212669/182045981-08d77f7e-2847-4f82-8ef6-d2f4609e0e0d.png)
+
+![diplomaPensamientoCompPython](https://user-images.githubusercontent.com/86212669/182046012-a1d4ad9d-033a-400d-94aa-5f55854e87c5.png)
+
 
