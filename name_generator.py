@@ -27,9 +27,7 @@ def name_generator(language, legitimacy):
 		str: a name
 	"""
 	bot_name = []
-	# first_name = []
 	first_name = ""
-	# surname = []
 	surname = ""
 	CASES = ("uc", "lc", "c") 
 	START = ("Xx", "xX", "the", "The")
@@ -47,16 +45,11 @@ def name_generator(language, legitimacy):
 		start = random.choice(START)
 		bot_name.append(start)
 		finish_index = START.index(start)
-	
+
 	# Concatenates the name itself
 	if language == "r":
 		language = random.choice(LAN)
-	# if language == r:
-	# 	aux = random.randint(1, 2)
-	# 	if aux == 1:
-	# 		language = "mx"
-	# 	elif aux == 2:
-	# 		language = "us"
+
 
 	if language == "mx":
 		names_male_mx: object = file_to_list('namesMaleMX.txt')
@@ -96,8 +89,8 @@ def name_generator(language, legitimacy):
 		if r6 == 4:
 			surname = random.choice(nouns_us)
 
-	first_name = first_name.strip()
-	surname = surname.strip()
+	first_name = first_name.replace(" ", "")
+	surname = surname.replace(" ", "")
 	if case == "uc":
 		first_name = first_name.upper()
 		surname = surname.upper()
@@ -165,7 +158,8 @@ def run():
 	
 	if ammount == 1:
 		print("Your bot name is:")
-		bot_name = name_generator(language, legitimacy)
+		name = name_generator(language, legitimacy)
+		print(name)
 	else:
 		print("Your bots names are:")
 		for i in range(ammount):
