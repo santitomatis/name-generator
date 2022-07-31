@@ -40,7 +40,7 @@ def name_generator(language, legitimacy):
 	# Start (sometimes adds a prefix)
 	r = random.randint(1, 6)
 	if legitimacy == "av": 
-		r = random.randint(1, 2)
+		r = random.randint(2, 4)
 
 	if r == 1:
 		start_index = random.randint(0, 1)
@@ -114,7 +114,8 @@ def name_generator(language, legitimacy):
 	r4 = random.randint(1, 4) # Determines if a suffix is added
 	if legitimacy == "av": # If te user chooses the "availability" option it always add numbers in the end (in a wider length that if the user chooses "credibility" and the number option is choosen randomly)
 		r4 = 3
-		print(f"log1 {r4}")
+	if r == 1:
+		r4 = 6 # So it just enters the if that adds the other pair
 	
 	if r3 == 1:
 		bot_name.append(surname)
@@ -134,7 +135,6 @@ def name_generator(language, legitimacy):
 		bot_name.append(finish)
 	
 	if r4 == 3: # Adds a random combination of numbers to the name
-		print("log2")
 		finish = []
 		if legitimacy == "av": # If the user chooses the "availability" option it will make the number of the suffix >= 4 digits long
 			length = random.randint(4, 7)
@@ -145,7 +145,6 @@ def name_generator(language, legitimacy):
 		for i in range(length):
 			finish.append(random.choice(NUMS))
 		finish = "".join(map(str, finish))
-		print(f"log3 {finish}")
 		bot_name.append(finish)
 
 	bot_name = "".join(map(str, bot_name))
