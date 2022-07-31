@@ -118,11 +118,11 @@ def name_generator(language, legitimacy):
 		surname = surname.capitalize()
 	
 	r3 = random.randint(1, 2) # Determines which is going first (name or surname)
-	r4 = random.randint(1, 4) # Determines if a suffix is added
+	r4 = random.randint(1, 7) # Determines if a suffix is added
 	if legitimacy == "av": # If te user chooses the "availability" option it always add numbers in the end (in a wider length that if the user chooses "credibility" and the number option is choosen randomly)
 		r4 = 3
 	if r == 1:
-		r4 = 6 # So it just enters the if that adds the other pair
+		r4 = 8 # So it just enters the if that adds the other pair
 	
 	first_name = str(first_name)
 	surname = str(surname)
@@ -151,7 +151,7 @@ def name_generator(language, legitimacy):
 		finish = FINISH[finish_index]
 		bot_name.append(finish)
 	
-	if r4 == 3: # Adds a random combination of numbers to the name
+	if r4 == 3 or r4 == 4: # Adds a random combination of numbers to the name
 		finish = []
 		if legitimacy == "av": # If the user chooses the "availability" option it will make the number of the suffix >= 4 digits long
 			length = random.randint(4, 7)
