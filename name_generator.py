@@ -16,12 +16,13 @@ def file_to_list(file):
 	file_object.close()
 	return list(filter(None, pd.unique(rtn).tolist())) # Remove Empty/Duplicates Values
 
-def name_generator(language, legitimacy):
+def name_generator(language, legitimacy, length):
 	"""Creates a random name
 
 	Args:
 		language (str): Determines wether the name generated is taken from the list of most common names of Mexico or USA
 		legitimacy (str): Allows you to generate names more credible or names more likely to be available for registration(e.g: the availabilty option adds numbers at the end)
+		length (str): Makes the name generated shorter or longer
 
 	Returns:
 		str: a name
@@ -32,7 +33,7 @@ def name_generator(language, legitimacy):
 	CASES = ("uc", "lc", "c") 
 	START = ("Xx", "xX", "the", "The", "Nitro", "Blast", "Blaze", "Inferno", "Pyro", "Flame", "Flare", "Spark", "Burst", "Eruption", "Surge", "Torrent", "Cyclone")
 	# the name generated may have the same word both at the start and end (refering to indexes of START from 4-16 and FINISH 8-20 but I dont think that it is a problem so I'll keep it that way)
-	FINISH = ("xX", "Xx", "pro", "Pro", "gamer", "Gamer", "123", "1234",  "Nitro", "Blast", "Blaze", "Inferno", "Pyro", "Flame", "Flare", "Spark", "Burst", "Eruption", "Surge", "Torrent", "Cyclone")
+	FINISH = ("xX", "Xx", "pro", "Pro", "123", "1234", "gamer", "Gamer",  "Nitro", "Blast", "Blaze", "Inferno", "Pyro", "Flame", "Flare", "Spark", "Burst", "Eruption", "Surge", "Torrent", "Cyclone")
 	LAN = ("mx", "us")
 	# Indexes 0 and 1 are paired, e.g: if a name starts with START[0] it has to end with FINISH[0]
 	NUMS = ("0", "1", "3", "4", "5", "6", "7", "8", "9")
@@ -48,7 +49,12 @@ def name_generator(language, legitimacy):
 		finish_index = START.index(start)
 	
 	elif r == 2 or 6:
-		start_index = random.randint(2, 16)
+		if length == "sh":
+			start_index = random.randint(2, 3)
+		
+		elif length == "lo":
+			start_index = random.randint(4, 16)
+
 		start = START[start_index]
 	
 	bot_name.append(start)
@@ -130,16 +136,21 @@ def name_generator(language, legitimacy):
 		bot_name.append(finish)
 	
 	if r4 == 1 or 2: # Adds a common suffix (also biases the random generator to make this option more frequent)
-		finish_index = random.randint(2, 20)
+		if length == "sh":
+			finish_index = random.randint(2, 5)
+		
+		elif length == "lo":
+			finish_index = random.randint(5, 20)
+
 		finish = FINISH[finish_index]
 		bot_name.append(finish)
 	
 	if r4 == 3: # Adds a random combination of numbers to the name
 		finish = []
-		if legitimacy == "av": # If the user chooses the "availability" option it will make the number of the suffix >= 4 digits long
+		if legitimacy == "av" or length == "lo": # If the user chooses the "availability" or "long" option it will make the number of the suffix >= 4 digits long
 			length = random.randint(4, 7)
 		
-		elif legitimacy == "cr": # If the user chooses the "credibility" option it will make the number of the suffix <= 4
+		elif legitimacy == "cr" or length == "sh": # If the user chooses the "credibility" or "short" option it will make the number of the suffix <= 4
 			length = random.randint(1, 4)
 
 		for i in range(length):
@@ -158,21 +169,22 @@ def run():
 		language = str(input("From which country do you want your name to be? (type mx for Mexico or us for United States)"))
 		ammount = int(input("How many bot names do you want to generate? (just type an int number (eg: 5))"))
 		legitimacy = str(input("Do you want your name to be more credible or more likely to be available (for registration in 3rd party apps)? | (type cr for credible and av for available)"))
-
+		length = str(input("Do you want your password to be short or long? (type sh for short and lo for longer names)"))
 
 	elif advanced_config == "n":
 		language = "r" #random, using "r" as a template to declare random variables from now on
 		ammount = 1
 		legitimacy = "cr"
+		length = "sh"
 	
 	if ammount == 1:
 		print("Your bot name is:")
-		name = name_generator(language, legitimacy)
+		name = name_generator(language, legitimacy, length)
 		print(name)
 	else:
 		print("Your bots names are:")
 		for i in range(ammount):
-			name = name_generator(language, legitimacy)
+			name = name_generator(language, legitimacy, length)
 			print(name)
 
 if __name__ == "__main__":
