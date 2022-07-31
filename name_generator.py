@@ -205,8 +205,8 @@ def run():
 	advanced_config = str(input("Do you want to do some advanced configuration? Just type y/n (yes or no) "))
 	if advanced_config == "y":
 		language = str(input("From which country do you want your name to be? (type mx for Mexico or us for United States)"))
-		ammount = int(input("How many bot names do you want to generate? (just type an int number (eg: 5))"))
 		legitimacy = str(input("Do you want your name to be more credible or more likely to be available (for registration in 3rd party apps)? | (type cr for credible and av for available)"))
+		ammount = int(input("How many bot names do you want to generate? (just type an int number (eg: 5))"))
 		separator = str(input("Do you want to generate names with a separator between them? (type y for yes and n for no)"))
 	
 	elif advanced_config == "n":
