@@ -37,6 +37,7 @@ def name_generator(language, legitimacy):
 	# Indexes 0 and 1 are paired, e.g: if a name starts with START[0] it has to end with FINISH[0]
 	NUMS = ("0", "1", "3", "4", "5", "6", "7", "8", "9")
 	case = random.choice(CASES) # Makes the casing of the name random
+	empty_counter = 0
 	# Start (sometimes adds a prefix)
 	start = ""
 	r = random.randint(1, 6)
@@ -48,7 +49,7 @@ def name_generator(language, legitimacy):
 		start = START[start_index]
 		finish_index = START.index(start)
 	
-	elif r == 2 or r ==  6:
+	elif r == 2 or r == 3 or r == 4:
 		if legitimacy == "cr":
 			start_index = random.randint(2, 3)
 		
@@ -58,8 +59,10 @@ def name_generator(language, legitimacy):
 		start = START[start_index]
 	
 	else:
+		empty_counter += 1
 		start_index = -1
 	
+	print(f"log1: start is {start}")
 
 	# Name and surname
 	if language == "r":
@@ -74,7 +77,7 @@ def name_generator(language, legitimacy):
 		r2 = random.randint(1, 2) # Chooses from the female or Male MX common nammes
 		r2b = random.randint(1, 4) # Sometimes chooses a "surname" from a noun list rather than a surname list
 		if legitimacy == "cr":
-			r2c = random.randint(1, 3) # Some credible names won't have a surname
+			r2c = random.randint(1, 4) # Some credible names won't have a surname
 		elif legitimacy == "av":
 			r2c = random.randint(1, 8)
 		if legitimacy == "cr": # If the user chooses the credibility option it will always pick a surname form the surname list, not the nouns one
@@ -88,6 +91,7 @@ def name_generator(language, legitimacy):
 		
 		if r2c == 1:
 			surname = ""
+			empty_counter += 1
 
 		elif r2b == 1 or r2b == 2 or r2b == 3:
 			surname = random.choice(surnames_mx)
@@ -102,7 +106,7 @@ def name_generator(language, legitimacy):
 		first_name = random.choice(names_us)
 		r6 = random.randint(1, 4) # Sometimes chooses a "surname" from a noun list rather than a surname list
 		if legitimacy == "cr":
-			r6b = random.randint(1, 3)
+			r6b = random.randint(1, 4) # Some credible names won't have a surname
 		elif legitimacy == "av":
 			r6b = random.randint(1, 8)
 		if legitimacy == "cr": # If the user chooses the credibility option it will always pick a surname form the surname list, not the nouns one
@@ -110,6 +114,7 @@ def name_generator(language, legitimacy):
 
 		if r6b == 1:
 			surname = ""
+			empty_counter += 1
 
 		elif r6 == 1 or 2 or 3: 
 			surname = random.choice(surnames_us)
@@ -117,18 +122,20 @@ def name_generator(language, legitimacy):
 		elif r6 == 4:
 			surname = random.choice(nouns_us)
 
-	# Finish (sometimes adds a suffix)
-	r4 = random.randint(1, 9) # Determines if a suffix is added
-	if legitimacy == "av": # If te user chooses the "availability" option it always add numbers in the end (in a wider length that if the user chooses "credibility" and the number option is choosen randomly)
-		r4 = 3
-	if r == 1:
-		r4 = 10 # So it just enters the if that adds the other pair
-	
 	first_name = str(first_name)
 	surname = str(surname)
 	first_name = first_name.split(" ", 1) [0]
 	surname = surname.split(" ", 1) [0]
 
+	print(f"log2: name is {first_name} surname is {surname}")
+	# Finish (sometimes adds a suffix)
+	r4 = random.randint(1, 9) # Determines if a suffix is added
+	if empty_counter > 1:
+		r4 = random.randint(1, 5) # if the empty counter is > 2 it will always add a suffix
+	if legitimacy == "av": # If te user chooses the "availability" option it always add numbers in the end (in a wider length that if the user chooses "credibility" and the number option is choosen randomly)
+		r4 = 3
+	if r == 1:
+		r4 = 10 # So it just enters the if that adds the other pair
 	finish = ""
 	if r == 1: # Adds the other pair of the start choice
 		finish = FINISH[finish_index]
@@ -154,6 +161,7 @@ def name_generator(language, legitimacy):
 			finish.append(random.choice(NUMS))
 		
 		finish = "".join(map(str, finish))
+	print(f"log3: finish is {finish}")
 	
 	# casing
 	if r4 >= 3 or r4 <= 5:
@@ -218,6 +226,7 @@ def run():
 		for i in range(ammount):
 			name = name_generator(language, legitimacy)
 			print(name)
+			print("---------------------------------------------------")
 
 if __name__ == "__main__":
 	run()
