@@ -69,6 +69,8 @@ def name_generator(language, legitimacy):
 		nouns_mx: object = file_to_list('nounsMX.txt')
 		r2 = random.randint(1, 2) # Chooses from the female or Male MX common nammes
 		r2b = random.randint(1, 4) # Sometimes chooses a "surname" from a noun list rather than a surname list
+		if legitimacy == "cr":
+			r2c = random.randint(1, 3) # Some credible names won't have a surname
 		if legitimacy == "cr": # If the user chooses the credibility option it will always pick a surname form the surname list, not the nouns one
 			r2b = 1
 
@@ -77,16 +79,15 @@ def name_generator(language, legitimacy):
 
 		elif r2 == 2:
 			first_name = random.choice(names_female_mx)
+		
+		if r2c == 1:
+			surname = ""
 
-		if r2b == 1 or 2 or 3:
+		elif r2b == 1 or r2b == 2 or r2b == 3:
 			surname = random.choice(surnames_mx)
 		
 		elif r2b == 4:
 			surname = random.choice(nouns_mx)
-		
-		# first_name = first_name.split(" ", 1)
-		# surname = surname.split(" ", 1)
-
 	
 	elif language == "us":
 		names_us: object = file_to_list('namesUS.txt')
@@ -94,13 +95,18 @@ def name_generator(language, legitimacy):
 		nouns_us: object = file_to_list('nounsUS.txt') 
 		first_name = random.choice(names_us)
 		r6 = random.randint(1, 4) # Sometimes chooses a "surname" from a noun list rather than a surname list
+		if legitimacy == "cr":
+			r6b = random.randint(1, 3)
 		if legitimacy == "cr": # If the user chooses the credibility option it will always pick a surname form the surname list, not the nouns one
 			r6 = 1
 
-		if r6 == 1 or 2 or 3: 
+		if r6b == 1:
+			surname = ""
+
+		elif r6 == 1 or 2 or 3: 
 			surname = random.choice(surnames_us)
 
-		if r6 == 4:
+		elif r6 == 4:
 			surname = random.choice(nouns_us)
 
 	
