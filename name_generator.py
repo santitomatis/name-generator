@@ -11,7 +11,7 @@ def file_to_list(file):
         array: an array with each line of the .txt
     """
 	rtn: object = []
-	file_object: object = open(file, "r")
+	file_object: object = open(file, "r", encoding="utf8", errors='ignore')
 	rtn: object = file_object.read().splitlines()
 	file_object.close()
 	return list(filter(None, pd.unique(rtn).tolist())) # Remove Empty/Duplicates Values
@@ -28,10 +28,13 @@ def name_generator(language, legitimacy):
 	"""
 	bot_name = []
 	# first_name = []
+	first_name = ""
 	# surname = []
+	surname = ""
 	CASES = ("uc", "lc", "c") 
 	START = ("Xx", "xX", "the", "The")
 	FINISH = ("xX", "Xx", "pro", "Pro", "gamer", "Gamer", "123", "1234", )
+	LAN = ("mx", "us")
 	# Indexes 0 and 1 are paired, e.g: if a name starts with START[0] it has to end with FINISH[0]
 	NUMS = ("0", "1", "3", "4", "5", "6", "7", "8", "9")
 	case = random.choice(CASES) # Makes the casing of the name random
@@ -42,8 +45,19 @@ def name_generator(language, legitimacy):
 
 	if r == 1 or 2 or 3:
 		start = random.choice(START)
+		bot_name.append(start)
 		finish_index = START.index(start)
+	
 	# Concatenates the name itself
+	if language == "r":
+		language = random.choice(LAN)
+	# if language == r:
+	# 	aux = random.randint(1, 2)
+	# 	if aux == 1:
+	# 		language = "mx"
+	# 	elif aux == 2:
+	# 		language = "us"
+
 	if language == "mx":
 		names_male_mx: object = file_to_list('namesMaleMX.txt')
 		names_female_mx: object = file_to_list('namesFemaleMX.txt')
@@ -53,6 +67,7 @@ def name_generator(language, legitimacy):
 		r2b = random.randint(1, 4) # Sometimes chooses a "surname" from a noun list rather than a surname list
 		if legitimacy == "cr": # If the user chooses the credibility option it will always pick a surname form the surname list, not the nouns one
 			r2b = 1
+
 		if r2 == 1:
 			first_name = random.choice(names_male_mx)
 
@@ -68,8 +83,8 @@ def name_generator(language, legitimacy):
 	
 	elif language == "us":
 		names_us: object = file_to_list('namesUS.txt')
-		surnames_us: object = file_to_list('surnamesMX.txt')
-		nouns: object = file_to_list('nouns.txt') 
+		surnames_us: object = file_to_list('surnamesUS.txt')
+		nouns_us: object = file_to_list('nounsUS.txt') 
 		first_name = random.choice(names_us)
 		r6 = random.randint(1, 4) # Sometimes chooses a "surname" from a noun list rather than a surname list
 		if legitimacy == "cr": # If the user chooses the credibility option it will always pick a surname form the surname list, not the nouns one
@@ -79,50 +94,22 @@ def name_generator(language, legitimacy):
 			surname = random.choice(surnames_us)
 
 		if r6 == 4:
-			surname = random.choice(nouns)
+			surname = random.choice(nouns_us)
 
-	# Cases the name and surname
-	# for i in range(len(first_name)):
-	# 	first_name[i] = first_name[i].strip()
-	# 	if case == "uc":
-	# 		first_name[i] = first_name[i].upper()
-		
-	# 	elif case == "lc":
-	# 		first_name[i] = first_name[i].lower()
-
-	# 	elif case == "c":
-	# 		first_name[i] = first_name[i].capitalize()
 	first_name = first_name.strip()
+	surname = surname.strip()
 	if case == "uc":
 		first_name = first_name.upper()
+		surname = surname.upper()
 		
 	elif case == "lc":
 		first_name = first_name.lower()
-
-	elif case == "c":
-		first_name = first_name.capitalize()
-
-	# i = 0	
-	# for i in range(len(surname)):
-	# 	surname[i] = surname[i].strip()
-	# 	if case == "uc":
-	# 		surname[i] = surname[i].upper()
-			
-	# 	elif case == "lc":
-	# 		surname[i] =surname[i].lower()
-
-	# 	elif case == "c":
-	# 		surname[i] = surname[i].capitalize()	
-	surname = surname.strip()
-	if case == "uc":
-		surname = surname.upper()
-			
-	elif case == "lc":
 		surname =surname.lower()
 
 	elif case == "c":
+		first_name = first_name.capitalize()
 		surname = surname.capitalize()
-
+	
 	r3 = random.randint(1, 2) # Determines which is going first (name or surname)
 	r4 = random.randint(1, 4) # Determines if a suffix is added
 	if legitimacy == "av": # If te user chooses the "availability" option it always add numbers in the end (in a wider length that if the user chooses "credibility" and the number option is choosen randomly)
@@ -134,6 +121,7 @@ def name_generator(language, legitimacy):
 	elif r3 == 2:
 		bot_name.append(surname)
 		bot_name.append(first_name)
+
 	# Finish (sometimes adds a suffix)
 	if r == 1 and finish_index > 1: # Adds the other pair of the start choice
 		finish = FINISH[finish_index]
