@@ -38,6 +38,7 @@ def name_generator(language, legitimacy):
 	NUMS = ("0", "1", "3", "4", "5", "6", "7", "8", "9")
 	case = random.choice(CASES) # Makes the casing of the name random
 	# Start (sometimes adds a prefix)
+	start = ""
 	r = random.randint(1, 6)
 	if legitimacy == "av": 
 		r = 2
@@ -47,7 +48,7 @@ def name_generator(language, legitimacy):
 		start = START[start_index]
 		finish_index = START.index(start)
 	
-	elif r == 2 or 6:
+	elif r == 2 or r ==  6:
 		if legitimacy == "cr":
 			start_index = random.randint(2, 3)
 		
@@ -56,13 +57,16 @@ def name_generator(language, legitimacy):
 
 		start = START[start_index]
 	
+	else:
+		start_index = -1
+	
 
-	# Concatenates the name itself
+	# Name and surname
 	if language == "r":
 		language = random.choice(LAN)
 
 
-	if language == "mx":
+	if language == "mx": # spanish name
 		names_male_mx: object = file_to_list('namesMaleMX.txt')
 		names_female_mx: object = file_to_list('namesFemaleMX.txt')
 		surnames_mx: object = file_to_list('surnamesMX.txt')
@@ -71,6 +75,8 @@ def name_generator(language, legitimacy):
 		r2b = random.randint(1, 4) # Sometimes chooses a "surname" from a noun list rather than a surname list
 		if legitimacy == "cr":
 			r2c = random.randint(1, 3) # Some credible names won't have a surname
+		elif legitimacy == "av":
+			r2c = random.randint(1, 8)
 		if legitimacy == "cr": # If the user chooses the credibility option it will always pick a surname form the surname list, not the nouns one
 			r2b = 1
 
@@ -89,7 +95,7 @@ def name_generator(language, legitimacy):
 		elif r2b == 4:
 			surname = random.choice(nouns_mx)
 	
-	elif language == "us":
+	elif language == "us": # english name
 		names_us: object = file_to_list('namesUS.txt')
 		surnames_us: object = file_to_list('surnamesUS.txt')
 		nouns_us: object = file_to_list('nounsUS.txt') 
@@ -97,6 +103,8 @@ def name_generator(language, legitimacy):
 		r6 = random.randint(1, 4) # Sometimes chooses a "surname" from a noun list rather than a surname list
 		if legitimacy == "cr":
 			r6b = random.randint(1, 3)
+		elif legitimacy == "av":
+			r6b = random.randint(1, 8)
 		if legitimacy == "cr": # If the user chooses the credibility option it will always pick a surname form the surname list, not the nouns one
 			r6 = 1
 
@@ -109,7 +117,7 @@ def name_generator(language, legitimacy):
 		elif r6 == 4:
 			surname = random.choice(nouns_us)
 
-	
+	# Finish (sometimes adds a suffix)
 	r4 = random.randint(1, 9) # Determines if a suffix is added
 	if legitimacy == "av": # If te user chooses the "availability" option it always add numbers in the end (in a wider length that if the user chooses "credibility" and the number option is choosen randomly)
 		r4 = 3
@@ -121,7 +129,6 @@ def name_generator(language, legitimacy):
 	first_name = first_name.split(" ", 1) [0]
 	surname = surname.split(" ", 1) [0]
 
-	# Finish (sometimes adds a suffix)
 	finish = ""
 	if r == 1: # Adds the other pair of the start choice
 		finish = FINISH[finish_index]
