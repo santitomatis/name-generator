@@ -29,11 +29,11 @@ Do you want your name to be more credible or more likely to be available (for re
 How many bot names do you want to generate? (just type an int number (eg: 5))10
 Do you want to generate names with a separator between them? (type y for yes and n for no)n
 Your bots names are:
-TheWHILDENALYCIA
+HamlinCrystallynn
 TheSENTINELLAJACKALYN45
 xXSaidiLasandraXx
 XxSnearlyVernonxX
-XxWHATCOTTMIKELxX
+Kyrstenpro
 TheHELMINKMAYUR
 TheKush
 MednickAminda
